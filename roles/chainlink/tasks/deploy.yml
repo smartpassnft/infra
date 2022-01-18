@@ -1,0 +1,63 @@
+---
+- name: Chainlink config
+  tags: setup,never
+  #become_user: chainlink
+  block:
+  - name: admin key password
+    ansible.builtin.copy:
+      content: "{{chainlink_admin_keypass}}"
+      dest: /home/chainlink/.password
+  - name: admin account creds
+    ansible.builtin.copy:
+      content: |
+        {{chainlink_admin_user}}
+        {{chainlink_admin_password}}
+      dest: /home/chainlink/.api
+  - name: vrf password
+    ansible.builtin.copy:
+      content: "{{chainlink_vrf_password}}"
+      dest: /home/chainlink/.vrf
+  become: yes
+
+- name: Chainlinke deploy images
+  tags: start,never
+  block:
+  # Chainlink requires a synced Avalanche node and a postgres
+  - name: Check Avax node is synced
+    uri:
+      method: POST
+      url: "http://localhost:9650/ext/info"
+      body: { 'jsonrpc': '2.0', 'id': 1, 'method': 'info.isBootstrapped', 'params': { 'chain': 'C' } }
+      body_format: json
+      headers: 
+        "content-type": "application/json"
+      return_content: yes
+    register: avax_ready
+
+  - fail: 
+      msg: Avalanche local deployment not synced. Chainlink requires it to be synced.
+    when: false == avax_ready["json"]["result"]["isBootstrapped"]
+
+  - name: Start chainlink 
+    community.docker.docker_container:
+      name: "{{chainlink_cont_name}}"
+      image: "smartcontract/chainlink:{{chainlink_ver}}"
+      command: local n -p /chainlink/.password -a /chainlink/.api --vrfpassword /chainlink/.vrf
+      network_mode: host
+      env_file: '{{ lookup("env", "PWD") }}/roles/chainlink/files/env'
+      state: started 
+      volumes:
+        - /home/chainlink:/chainlink
+    when: avax_ready["json"]["result"]["isBootstrapped"]
+
+- name: Stop chainlink
+  tags: stop,never
+  community.docker.docker_container:
+    name: "{{chainlink_cont_name}}"
+    state: stopped
+     
+- name: Rm chainlink
+  tags: rm,never
+  community.docker.docker_container:
+    name: "{{chainlink_cont_name}}"
+    state: absent 

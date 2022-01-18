@@ -1,0 +1,33 @@
+- name: create postgres volume 
+  tags: start,never
+  community.docker.docker_volume:
+    name: postgres
+
+- name: start postgres 
+  tags: start,never
+  community.docker.docker_container:
+    name: '{{postgres_cont_name}}'
+    image: '{{dh_repo}}/{{postgres_image}}:{{postgres_tag}}'
+    state: started
+    volumes:
+      - postgres:/var/lib/postgres/data
+    ports:
+      - '5432:5432'
+
+- name: stop postgres 
+  tags: stop,never
+  community.docker.docker_container:
+    name: '{{postgres_cont_name}}'
+    state: stopped
+
+- name: remove postgres 
+  tags: rm,never
+  community.docker.docker_container:
+    name: '{{postgres_cont_name}}'
+    state: absent 
+
+- name: Destroy postgresql volume
+  tags: nuke,never
+  community.docker.docker_volume:
+    name: postgres
+    state: absent 

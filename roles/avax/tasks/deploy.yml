@@ -1,0 +1,97 @@
+---
+# Tags:
+#   - local-start := ensure avaxgo contianers are started
+#   - local-stop  := stop the avaxgo containers
+#   - local-rm    := remove avago containers 
+- name: Local net deployment
+  tags: never
+  block:
+  - name: Start local net
+    tags: local-start,never
+    community.docker.docker_container:
+      name: '{{local_cont_base_name}}{{item.id}}'
+      image: '{{dh_repo}}/{{avax_node_image}}:{{avax_node_tag}}'
+      network_mode: host
+      volumes:
+        - avax_fuji_volume:/home/avax/.avalanchego
+      command: |
+        --http-host=0.0.0.0 --public-ip=127.0.0.1 --snow-sample-size=2 --snow-quorum-size=2 
+        --http-port={{item.http_port}} --staking-port={{item.staking_port}} --db-dir=db/node{{item.id}} 
+        --staking-enabled=true --network-id=local --bootstrap-ips={{item.bootstrap_ip}} 
+        --bootstrap-ids={{item.bootstrap_id}} --staking-tls-cert-file={{avax_staking_dir}}/staker{{item.id}}.crt 
+        --staking-tls-key-file={{avax_staking_dir}}/staker{{item.id}}.key
+      state: started 
+    loop:
+      - { 'id': 1, 'http_port': 9652, 'staking_port': 9653, 'bootstrap_id': '', 'bootstrap_ip': ''}
+      - { 'id': 2, 'http_port': 9654, 'staking_port': 9655, 'bootstrap_id': '{{avax_local_testnet_bootstrap_id}}', 'bootstrap_ip': '127.0.0.1:9653'}
+      - { 'id': 3, 'http_port': 9656, 'staking_port': 9657, 'bootstrap_id': '{{avax_local_testnet_bootstrap_id}}', 'bootstrap_ip': '127.0.0.1:9653'}
+      - { 'id': 4, 'http_port': 9658, 'staking_port': 9659, 'bootstrap_id': '{{avax_local_testnet_bootstrap_id}}', 'bootstrap_ip': '127.0.0.1:9653'}
+      - { 'id': 5, 'http_port': 9660, 'staking_port': 9661, 'bootstrap_id': '{{avax_local_testnet_bootstrap_id}}', 'bootstrap_ip': '127.0.0.1:9653'}
+  - name: Stop local net
+    tags: local-stop,never
+    community.docker.docker_container:
+      name: '{{local_cont_base_name}}{{item}}'
+      state: stopped
+    loop: "{{ range(1, 6) | list }}"  
+  - name: Remove local net
+    tags: local-rm,never
+    community.docker.docker_container:
+      name: '{{local_cont_base_name}}{{item}}'
+      state: absent 
+    loop: "{{ range(1, 6) | list }}"  
+
+# Tags:
+#   - fuji-start := ensure avaxgo contianers are started
+#   - fuji-stop  := stop the avaxgo containers
+#   - fuji-rm    := remove avago containers 
+- name: fuji net deployment
+  tags: never
+  block:
+  - name: start fuji 
+    tags: fuji-start,never
+    community.docker.docker_container:
+      name: '{{fuji_cont_name}}'
+      image: '{{dh_repo}}/{{avax_node_image}}:{{avax_node_tag}}'
+      command: "--network-id=fuji --http-host=0.0.0.0 --api-ipcs-enabled --api-admin-enabled {{fuji_args}}" 
+      state: started
+      volumes:
+        - avax_fuji_volume:/home/avax/.avalanchego
+      ports:
+        - '9650:9650'
+        - '9651:9651'
+  - name: stop fuji 
+    tags: fuji-stop,never
+    community.docker.docker_container:
+      name: '{{fuji_cont_name}}'
+      state: stopped
+  - name: remove fuji 
+    tags: fuji-rm,never
+    community.docker.docker_container:
+      name: '{{fuji_cont_name}}'
+      state: absent 
+
+- name: main net deployment
+  tags: never
+  block:
+  - name: start main 
+    tags: main-start,never
+    community.docker.docker_container:
+      name: '{{main_cont_name}}'
+      image: '{{dh_repo}}/{{avax_node_image}}:{{avax_node_tag}}'
+      command: "--http-host=0.0.0.0 --api-ipcs-enabled --api-admin-enabled {{main_args}}" 
+      state: started
+      volumes:
+        - avax_main_volume:/var/lib/avax
+      ports:
+        - '9648:9650'
+        - '9649:9651'
+  - name: stop main 
+    tags: main-stop,never
+    community.docker.docker_container:
+      name: '{{main_cont_name}}'
+      state: stopped
+  - name: remove main 
+    tags: main-rm,never
+    community.docker.docker_container:
+      name: '{{main_cont_name}}'
+      state: absent 

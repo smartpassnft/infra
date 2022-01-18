@@ -1,0 +1,121 @@
+Usage of avalanchego:
+      --api-admin-enabled                                          If true, this node exposes the Admin API
+      --api-auth-password-file string                              Password file used to initially create/validate API authorization tokens. Leading and trailing whitespace is removed from the password. Can be changed via API call.
+      --api-auth-required                                          Require authorization token to call HTTP APIs
+      --api-health-enabled                                         If true, this node exposes the Health API (default true)
+      --api-info-enabled                                           If true, this node exposes the Info API (default true)
+      --api-ipcs-enabled                                           If true, IPCs can be opened
+      --api-keystore-enabled                                       If true, this node exposes the Keystore API (default true)
+      --api-metrics-enabled                                        If true, this node exposes the Metrics API (default true)
+      --assertions-enabled                                         Turn on assertion execution (default true)
+      --benchlist-duration duration                                Max amount of time a peer is benchlisted after surpassing the threshold. (default 30m0s)
+      --benchlist-fail-threshold int                               Number of consecutive failed queries before benchlisting a node. (default 10)
+      --benchlist-min-failing-duration duration                    Minimum amount of time messages to a peer must be failing before the peer is benched. (default 5m0s)
+      --benchlist-peer-summary-enabled                             Enables peer specific query latency metrics.
+      --boostrap-max-time-get-ancestors duration                   Max Time to spend fetching a container and its ancestors when responding to a GetAncestors (default 50ms)
+      --bootstrap-beacon-connection-timeout duration               Timeout when attempting to connect to bootstrapping beacons. (default 1m0s)
+      --bootstrap-ids string                                       Comma separated list of bootstrap peer ids to connect to. Example: NodeID-JR4dVmy6ffUGAKCBDkyCbeZbyHQBeDsET,NodeID-8CrVPQZ4VSqgL8zTdvL14G8HqAfrBr4z
+      --bootstrap-ips string                                       Comma separated list of bootstrap peer ips to connect to. Example: 127.0.0.1:9630,127.0.0.1:9631
+      --bootstrap-multiput-max-containers-received uint            This node reads at most this many containers from an incoming Multiput message (default 2000)
+      --bootstrap-multiput-max-containers-sent uint                Max number of containers in a Multiput message sent by this node (default 2000)
+      --bootstrap-retry-enabled                                    Specifies whether bootstrap should be retried (default true)
+      --bootstrap-retry-max-attempts int                           Specifies how many times bootstrap should be retried (default 50)
+      --build-dir string                                           Path to the build directory (default "/avalanchego/build")
+      --chain-config-dir string                                    Chain specific configurations parent directory. Defaults to $HOME/.avalanchego/configs/chains/ (default "/home/avax/.avalanchego/configs/chains")
+      --config-file string                                         Specifies a config file
+      --consensus-accepted-frontier-gossip-size uint               Number of peers to gossip to when gossiping accepted frontier (default 35)
+      --consensus-gossip-frequency duration                        Frequency of gossiping accepted frontiers. (default 10s)
+      --consensus-on-accept-gossip-size uint                       Number of peers to gossip to each accepted container to (default 20)
+      --consensus-shutdown-timeout duration                        Timeout before killing an unresponsive chain. (default 5s)
+      --create-asset-tx-fee uint                                   Transaction fee, in nAVAX, for transactions that create new assets (default 1000000)
+      --create-blockchain-tx-fee uint                              Transaction fee, in nAVAX, for transactions that create new blockchains (default 100000000)
+      --create-subnet-tx-fee uint                                  Transaction fee, in nAVAX, for transactions that create new subnets (default 100000000)
+      --db-dir string                                              Path to database directory (default "/home/avax/.avalanchego/db")
+      --db-type string                                             Database type to use. Should be one of {leveldb, rocksdb, memdb} (default "leveldb")
+      --dynamic-public-ip string                                   'ifconfigco' (alias 'ifconfig') or 'opendns' or 'ifconfigme'. By default does not do dynamic public IP updates. If non-empty, ignores public-ip argument.
+      --dynamic-update-duration duration                           Dynamic IP and NAT Traversal update duration (default 5m0s)
+      --fd-limit uint                                              Attempts to raise the process file descriptor limit to at least this value. (default 32768)
+      --genesis string                                             Specifies a genesis config file (ignored when running standard networks)
+      --health-check-averager-halflife duration                    Halflife of averager when calculating a running average in a health check (default 10s)
+      --health-check-frequency duration                            Time between health checks (default 30s)
+      --http-allowed-origins string                                Origins to allow on the HTTP port. Defaults to * which allows all origins. Example: https://*.avax.network https://*.avax-test.network (default "*")
+      --http-host string                                           Address of the HTTP server (default "127.0.0.1")
+      --http-port uint                                             Port of the HTTP server (default 9650)
+      --http-tls-cert-file string                                  TLS certificate file for the HTTPs server
+      --http-tls-enabled                                           Upgrade the HTTP server to HTTPs
+      --http-tls-key-file string                                   TLS private key file for the HTTPs server
+      --inbound-connection-throttling-cooldown duration            Allow an inbound connection from a given IP at most once per this duration. If 0, don't rate-limit inbound connections. (default 2s)
+      --inbound-connection-throttling-max-recent int               Allow at most this many inbound connection per [--inbound-connection-throttling-cooldown] (default 1024)
+      --index-allow-incomplete                                     If true, allow running the node in such a way that could cause an index to miss transactions. Ignored if index is disabled.
+      --index-enabled                                              If true, index all accepted containers and transactions and expose them via an API
+      --ipcs-chain-ids string                                      Comma separated list of chain ids to add to the IPC engine. Example: 11111111111111111111111111111111LpoYY,4R5p2RXDGLqaifZE4hHWH9owe34pfoBULn1DrQTWivjg8o4aH
+      --ipcs-path string                                           The directory (Unix) or named pipe name prefix (Windows) for IPC sockets
+      --log-dir string                                             Logging directory for Avalanche
+      --log-display-highlight string                               Whether to color/highlight display logs. Default highlights when the output is a terminal. Otherwise, should be one of {auto, plain, colors} (default "auto")
+      --log-display-level string                                   The log display level. If left blank, will inherit the value of log-level. Otherwise, should be one of {verbo, debug, info, warn, error, fatal, off}
+      --log-level string                                           The log level. Should be one of {verbo, debug, trace, info, warn, error, fatal, off} (default "info")
+      --max-stake-duration duration                                Maximum staking duration (default 8760h0m0s)
+      --max-validator-stake uint                                   Maximum stake, in nAVAX, that can be placed on a validator on the primary network (default 3000000000000000)
+      --meter-vms-enabled                                          Enable Meter VMs to track VM performance with more granularity
+      --min-delegation-fee uint                                    Minimum delegation fee, in the range [0, 1000000], that can be charged for delegation on the primary network (default 20000)
+      --min-delegator-stake uint                                   Minimum stake, in nAVAX, that can be delegated on the primary network (default 25000000000)
+      --min-stake-duration duration                                Minimum staking duration (default 24h0m0s)
+      --min-validator-stake uint                                   Minimum stake, in nAVAX, required to validate the primary network (default 2000000000000)
+      --network-compression-enabled                                If true, compress Put, PushQuery, PeerList and Multiput messages sent to peers that support compression (default true)
+      --network-health-max-outstanding-request-duration duration   Node reports unhealthy if there has been a request outstanding for this duration (default 5m0s)
+      --network-health-max-portion-send-queue-full float           Network layer returns unhealthy if more than this portion of the pending send queue is full (default 0.9)
+      --network-health-max-send-fail-rate float                    Network layer reports unhealthy if more than this portion of attempted message sends fail (default 0.9)
+      --network-health-max-time-since-msg-received duration        Network layer returns unhealthy if haven't received a message for at least this much time (default 1m0s)
+      --network-health-max-time-since-msg-sent duration            Network layer returns unhealthy if haven't sent a message for at least this much time (default 1m0s)
+      --network-health-min-conn-peers uint                         Network layer returns unhealthy if connected to less than this many peers (default 1)
+      --network-id string                                          Network ID this node will connect to (default "mainnet")
+      --network-initial-timeout duration                           Initial timeout value of the adaptive timeout manager. (default 5s)
+      --network-maximum-timeout duration                           Maximum timeout value of the adaptive timeout manager. (default 10s)
+      --network-minimum-timeout duration                           Minimum timeout value of the adaptive timeout manager. (default 2s)
+      --network-peer-list-gossip-frequency duration                Gossip [network-peer-list-size] peers to [network-peer-list-gossip-size] peers every [network-peer-list-gossip-frequency] (default 1m0s)
+      --network-peer-list-gossip-size uint                         Gossip [network-peer-list-size] peers to [network-peer-list-gossip-size] peers every [network-peer-list-gossip-frequency] (default 50)
+      --network-peer-list-size uint                                Gossip [network-peer-list-size] peers to [network-peer-list-gossip-size] peers every [network-peer-list-gossip-frequency] (default 20)
+      --network-timeout-coefficient float                          Multiplied by average network response time to get the network timeout. Must be >= 1. (default 2)
+      --network-timeout-halflife duration                          Halflife of average network response time. Higher value --> network timeout is less volatile. Can't be 0. (default 5m0s)
+      --outbound-connection-throttling-rps uint                    Make at most this number of outgoing peer connection attempts per second. (default 50)
+      --outbound-connection-timeout duration                       Timeout when dialing a peer. (default 30s)
+      --peer-alias-timeout duration                                How often the node will attempt to connect to an IP address previously associated with a peer (i.e. a peer alias). (default 10m0s)
+      --plugin-mode-enabled                                        Whether the app should run as a plugin
+      --profile-continuous-enabled                                 Whether the app should continuously produce performance profiles
+      --profile-continuous-freq duration                           How frequently to rotate performance profiles (default 15m0s)
+      --profile-continuous-max-files int                           Maximum number of historical profiles to keep (default 5)
+      --profile-dir string                                         Path to the profile directory (default "/home/avax/.avalanchego/profiles")
+      --public-ip string                                           Public IP of this node for P2P communication. If empty, try to discover with NAT. Ignored if dynamic-public-ip is non-empty.
+      --router-health-max-drop-rate float                          Node reports unhealthy if the router drops more than this portion of messages. (default 1)
+      --router-health-max-outstanding-requests uint                Node reports unhealthy if there are more than this many outstanding consensus requests (Get, PullQuery, etc.) over all chains (default 1024)
+      --signature-verification-enabled                             Turn on signature verification (default true)
+      --snow-avalanche-batch-size int                              Number of operations to batch in each new vertex (default 30)
+      --snow-avalanche-num-parents int                             Number of vertexes for reference from each new vertex (default 5)
+      --snow-concurrent-repolls int                                Minimum number of concurrent polls for finalizing consensus (default 4)
+      --snow-epoch-duration duration                               Duration of each epoch (default 6h0m0s)
+      --snow-epoch-first-transition int                            Unix timestamp of the first epoch transaction, in seconds. Defaults to 12/10/2020 @ 7:00pm (UTC) (default 1607626800)
+      --snow-max-processing int                                    Maximum number of processing items to be considered healthy (default 1024)
+      --snow-max-time-processing duration                          Maximum amount of time an item should be processing and still be healthy (default 2m0s)
+      --snow-optimal-processing int                                Optimal number of processing vertices in consensus (default 50)
+      --snow-quorum-size int                                       Alpha value to use for required number positive results (default 16)
+      --snow-rogue-commit-threshold int                            Beta value to use for rogue transactions (default 20)
+      --snow-sample-size int                                       Number of nodes to query for each network poll (default 20)
+      --snow-virtuous-commit-threshold int                         Beta value to use for virtuous transactions (default 15)
+      --stake-minting-period duration                              Consumption period of the staking function (default 8760h0m0s)
+      --staking-disabled-weight uint                               Weight to provide to each peer when staking is disabled (default 1)
+      --staking-enabled                                            Enable staking. If enabled, Network TLS is required. (default true)
+      --staking-ephemeral-cert-enabled                             If true, the node uses an ephemeral staking key and certificate, and has an ephemeral node ID.
+      --staking-port uint                                          Port of the consensus server (default 9651)
+      --staking-tls-cert-file string                               Path to the TLS certificate for staking (default "/home/avax/.avalanchego/staking/staker.crt")
+      --staking-tls-key-file string                                Path to the TLS private key for staking (default "/home/avax/.avalanchego/staking/staker.key")
+      --throttler-inbound-at-large-alloc-size uint                 Size, in bytes, of at-large byte allocation in inbound message throttler. (default 33554432)
+      --throttler-inbound-node-max-at-large-bytes uint             Max number of bytes a node can take from the inbound message throttler's at-large allocation. (default 4194304)
+      --throttler-inbound-validator-alloc-size uint                Size, in bytes, of validator byte allocation in inbound message throttler. (default 33554432)
+      --throttler-outbound-at-large-alloc-size uint                Size, in bytes, of at-large byte allocation in outbound message throttler. (default 33554432)
+      --throttler-outbound-node-max-at-large-bytes uint            Max number of bytes a node can take from the outbound message throttler's at-large allocation. (default 4194304)
+      --throttler-outbound-validator-alloc-size uint               Size, in bytes, of validator byte allocation in outbound message throttler. (default 33554432)
+      --tx-fee uint                                                Transaction fee, in nAVAX (default 1000000)
+      --uptime-requirement float                                   Fraction of time a validator must be online to receive rewards (default 0.6)
+      --version                                                    If true, print version and quit
+      --vm-aliases-file string                                     Specifies a JSON file that maps vmIDs with custom aliases. (default "/home/avax/.avalanchego/configs/vms/aliases.json")
+      --whitelisted-subnets string                                 Whitelist of subnets to validate.

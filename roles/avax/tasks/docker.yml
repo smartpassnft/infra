@@ -1,0 +1,28 @@
+---
+- name: Avax Builder Image 
+  tags: build,never
+  community.docker.docker_image:
+    name: '{{dh_username}}/{{avax_node_image}}' 
+    tag: '{{avax_node_tag}}'
+    source: build
+    force_source: yes 
+    build:
+      path: '.' 
+      dockerfile: 'roles/avax/files/Dockerfile'
+      args:
+        avax_ver: '{{avax_version}}'
+        userid: '{{avax_user_id}}'
+        groupid: '{{avax_group_id}}'
+
+- name: Tag and Push Avax
+  tags: push,never
+  block:
+  # use `--extra-vars` to set
+  - community.docker.docker_login:
+      username: '{{dh_username}}'
+      password: '{{dh_password}}'
+  - community.docker.docker_image:
+      name: '{{dh_username}}/{{avax_node_image}}'
+      tag: '{{avax_node_tag}}'
+      source: local
+      push: yes

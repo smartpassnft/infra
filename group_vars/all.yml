@@ -1,0 +1,5 @@
+
+# dh := dockerhub
+dh_base_repo: 'docker.io'
+dh_user: 'fuzzylemma'
+dh_repo: '{{dh_base_repo}}/{{dh_user}}'

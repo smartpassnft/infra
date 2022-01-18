@@ -1,0 +1,8 @@
+---
+- name: Docker Postgres 
+  include_tasks: roles/postgres/tasks/docker.yml
+  tags: docker
+
+- name: Deploy Postgres 
+  include_tasks: roles/postgres/tasks/deploy.yml
+  tags: deploy,never

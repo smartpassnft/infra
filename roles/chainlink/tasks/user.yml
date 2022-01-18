@@ -1,0 +1,11 @@
+---
+- name: Create chainlink user and group 
+  tags: user
+  import_task:
+    name: 'plays/user.yml'
+  vars:
+    group: "{{chainlink_group}}"
+    gid: "{{chainlink_group_id}}"
+    user: "{{chainlink_user}}"
+    uid: "{{chainlink_user_id}}"
+    user_group: "{{chainlink_group}}"

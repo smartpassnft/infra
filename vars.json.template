@@ -1,0 +1,11 @@
+{
+   "dh_username": "fuzzylemma",
+   "dh_password": "",
+   "ansible_become_password": "",
+
+   "chainlink_admin_user": "charles@mail.com",
+   "chainlink_admin_password": "charlesdoesnothaveachoclatefactory",
+   "chainlink_vrf_password": "charlesdoesnothaveachoclatefactory",
+   "chainlink_admin_keypass": "AaBbCc!1@2#3$4"
+
+}

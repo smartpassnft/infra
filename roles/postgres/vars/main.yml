@@ -1,0 +1,7 @@
+postgres_user:        'peter'
+postgres_password:    'postgresqlandchainlink'
+postgres_db:          'chainlink'
+
+postgres_cont_name:   'postgres-chainlink'
+postgres_image:       'avax-chainlink-tutorial-postgresql'
+postgres_tag:         'latest'

@@ -1,0 +1,23 @@
+# version
+avax_version:     '1.7.3'
+
+# user and group
+avax_user:        'avax'
+avax_user_id:     '1111'
+avax_group:       'avax'
+avax_group_id:    '1111'
+
+# docker
+avax_node_image:   'avaxgo'
+avax_testnet_tag:   'test-{{avax_version}}'
+avax_node_tag:      'v{{avax_version}}'
+avax_client_workdir: '/home/avax/.avalanchego'
+avax_staking_dir: '/home/avax/.avalanchego/staking/local'
+
+
+main_cont_name: 'avax-main'
+fuji_cont_name: 'avax-fuji'
+local_cont_base_name: 'avax-local-'
+fuji_args: ''
+main_args: ''
+avax_local_testnet_bootstrap_id: 'NodeID-7Xhw2mDxuDS44j42TCB6U5579esbSt3Lg'

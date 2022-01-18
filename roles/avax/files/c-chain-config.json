@@ -1,0 +1,8 @@
+{
+  "pruning-enabled": false,
+  "rpc-tx-fee-cap": 90,
+  "eth-api-enabled": true,
+  "tx-pool-api-enabled": true,
+  "debug-api-enabled": true,
+  "web3-api-enabled": true
+}

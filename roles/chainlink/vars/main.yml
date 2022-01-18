@@ -1,0 +1,9 @@
+# user and group
+chainlink_user:        'chainlink'
+chainlink_user_id:     '3333'
+chainlink_group:       'chainlink'
+chainlink_group_id:    '3333'
+
+
+chainlink_cont_name:    'chainlink-test'
+chainlink_ver:          '0.10.15'

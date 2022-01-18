@@ -1,0 +1,45 @@
+# Simple user create and remove
+#
+# Variables:
+#   - group      := name of group
+#   - gid        := group id 
+#   - user       := name of user
+#   - uid        := user id
+#   - user_group := group or groups to be given to user
+#
+# Tags:
+#   - create := creates group and user
+#   - delete := deletes group and user
+---
+- name: Create User and group
+  tags: create,never
+  block:
+  - name: Create Group 
+    ansible.builtin.group:
+      name: "{{group}}"
+      gid: "{{gid}}"
+      state: present
+  - name: Create User
+    ansible.builtin.user:
+      name: "{{user}}"
+      uid: "{{uid}}"
+      group: "{{user_group}}"
+      create_home: true
+  become: yes
+
+- name: Remove User and group
+  tags: remove,never 
+  block:
+  - name: Create Group 
+    ansible.builtin.group:
+      name: "{{group}}"
+      gid: "{{gid}}"
+      state: absent 
+  - name: Create User
+    ansible.builtin.user:
+      name: "{{user}}"
+      uid: "{{uid}}"
+      group: "{{user_group}}"
+      create_home: true
+      state: absent
+  become: yes

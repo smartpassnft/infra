@@ -1,0 +1,24 @@
+---
+- name: Postgres Builder Image 
+  tags: build,never
+  community.docker.docker_image:
+    name: '{{postgres_image}}' 
+    tag: '{{postgres_tag}}'
+    source: build
+    force_source: yes 
+    build:
+      path: '.' 
+      dockerfile: 'roles/postgres/files/Dockerfile'
+
+- name: Tag and Push Postgresql 
+  tags: push,never
+  block:
+  # use `--extra-vars` to set
+  - community.docker.docker_login:
+      username: '{{dh_username}}'
+      password: '{{dh_password}}'
+  - community.docker.docker_image:
+      name: '{{dh_repo}}/{{postgres_image}}'
+      tag: '{{postgres_tag}}'
+      source: local
+      push: yes
